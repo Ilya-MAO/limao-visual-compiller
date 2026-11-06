@@ -1,0 +1,75 @@
+============ LK ============ || ============ CPP ============
+
+foo (str name): ...          || void foo(std::string name) {...}
+;                            || [end]
+
+foo (i8 a, i8 b) -> i8: ...  || int8_t foo(int8_t a, int8_t b) {...}
+;                            || [end]
+
+
+foo (i16 n) -> !             || Signal<int16_t> foo;
+
+foo_signal ~> foo_slot       || foo_signal.connect([](int16_t n) { foo_slot(n); });   ||> return connection_id
+foo_signal ~!> foo_slot      || foo_connection_id.disconnect();
+foo_signal ~!> *             || foo_signal.disconnect_all();
+
+
+Foo -> u8:                   || enum class Foo : uint8_t
+  FOO_1                      || FOO_1
+  FOO_2: 40                  || FOO_2 = 40
+;                            || [end]
+
+
+Foo: ...                     || class Foo {...}
+;                            || [end]
+
+Foo [FooP1, FooP2]: ...      || class Foo : public FooP, public FooP {...}
+;                            || [end]
+
+============ LK ============
+
+@storage                     ||> delete copy and move constructors
+Foo:
+  (i16 num, str name)
+
+  + foo1 ()
+  ~ foo3 (str text) -> str
+  - foo4 () -> i32
+
+  + i16 m_num                ||> getter
+  * str m_name               ||> getter, setter
+  * FooA m_foo_a
+;
+
+============ CPP ============
+
+class Foo {
+public:
+  Foo() = default;
+  Foo(int16_t num, std::string name);
+  Foo(const Foo&) = delete;
+  Foo& operator=(const Foo&) = delete;
+  Foo(Foo&&) = delete;
+  Foo& operator=(Foo&&) = delete;
+
+  void foo1();
+
+  int16_t num() const { return m_num; }
+
+  void set_name(std::string name);
+  std::string name() const { return m_name; }
+  std::string_view name() const { return m_name; }
+
+  FooA* foo_a() const { return m_foo_a.get(); }
+  void set_foo_a(std::unique_ptr<FooA>&& foo_a);
+
+protected:
+  std::string foo3(std::string text);
+
+private:
+  int32_t foo4();
+
+  int16_t m_num{};
+  std::string m_name{};
+  std::unique_ptr<FooA> m_foo_a{};
+}

@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "configure",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "-S",
+        "${workspaceFolder}",
+        "-B",
+        "${workspaceFolder}/build",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+      ],
+      "presentation": { "reveal": "never" }
+    },
+
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "--build", "${workspaceFolder}/build", "-j", "4"
+      ],
+      "dependsOn": ["configure"],
+      "presentation": { "reveal": "never" }
+    },
+
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/bin/livc",
+      "args": [
+        "${workspaceFolder}/tests/01_variables.liv"
+      ],
+      "dependsOn": ["build"]
+    },
+
+    {
+      "label": "clean",
+      "type": "shell",
+      "command": "rm -rf ${workspaceFolder}/build/",
+      "presentation": { "reveal": "never" }
+    },
+  ]
+}

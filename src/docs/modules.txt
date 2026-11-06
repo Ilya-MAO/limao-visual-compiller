@@ -1,0 +1,11 @@
+============ LK ============ || ============ CPP ============
+
+| console                    || #include <path/to/console.hpp>
+
+| console : c                ||> allias
+
+|| math_method               ||> for community modules
+
+|~ custom_method             ||> for custom modules
+
+|~ luck.custom_method        || #include <root_project/luck/custom_method.hpp>

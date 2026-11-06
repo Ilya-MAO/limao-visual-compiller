@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "LKC debug",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/livc",
+      "args": [ "${workspaceFolder}/tests/syntaxes.liv" ],
+      "stopOnEntry": false,
+      "cwd": "${workspaceFolder}",
+      "env": {},
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
